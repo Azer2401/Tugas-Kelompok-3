@@ -28,17 +28,18 @@ Route::get('/kontak', [HomepageController::class, 'kontak']);
 
 Route::get('/kategori', [HomepageController::class, 'kategori']);
 
-Route::get('/kategori/{slug}', 'HomepageController@produkperkategori');
+Route::get('/kategori/{slug}', [HomepageController::class, 'kategori']);
 
 Route::get('/produk', [HomepageController::class, 'produk']);
 
-Route::get('/produk/{slug}', 'HomepageController@produkdetail');
+Route::get('/produk/{slug}', [HomepageController::class, 'produkdetail']);
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\UserController;
 Route::group(['prefix' => 'admin'], function() {
     Route::get('/', [DashboardController::class, 'index']);
     //route kategori
@@ -47,6 +48,14 @@ Route::group(['prefix' => 'admin'], function() {
     Route::resource('produk', ProdukController::class);
     //route customer
     Route::resource('customer', CustomerController::class);
-
+    //route transaksi
     Route::resource('transaksi', TransaksiController::class);
+    // profil
+    Route::get('profil', [UserController::class, 'index']);
+    // setting profil
+    Route::get('setting', [UserController::class, 'setting']);
+    // form laporan
+    Route::get('laporan', [LaporanController::class, 'index']);
+    // proses laporan
+    Route::get('proseslaporan', [LaporanController::class, 'proses']);
   });
