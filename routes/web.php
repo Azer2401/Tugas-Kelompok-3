@@ -28,10 +28,17 @@ Route::get('/kontak', [HomepageController::class, 'kontak']);
 
 Route::get('/kategori', [HomepageController::class, 'kategori']);
 
+Route::get('/kategori/{slug}', 'HomepageController@produkperkategori');
+
+Route::get('/produk', [HomepageController::class, 'produk']);
+
+Route::get('/produk/{slug}', 'HomepageController@produkdetail');
+
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\TransaksiController;
 Route::group(['prefix' => 'admin'], function() {
     Route::get('/', [DashboardController::class, 'index']);
     //route kategori
@@ -40,4 +47,6 @@ Route::group(['prefix' => 'admin'], function() {
     Route::resource('produk', ProdukController::class);
     //route customer
     Route::resource('customer', CustomerController::class);
+
+    Route::resource('transaksi', TransaksiController::class);
   });
