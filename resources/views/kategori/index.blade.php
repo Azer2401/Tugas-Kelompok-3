@@ -28,6 +28,21 @@
           </form>
         </div>
         <div class="card-body">
+          @if ($message = Session::get('error'))
+              <div class="alert alert-warning">
+                  <p>{{ $message }}</p>
+              </div>
+          @endif
+          @if ($message = Session::get('success'))
+              <div class="alert alert-success">
+                  <p>{{ $message }}</p>
+              </div>
+          @endif
+          @if(count($errors) > 0)
+          @foreach($errors->all() as $error)
+              <div class="alert alert-warning">{{ $error }}</div>
+          @endforeach
+          @endif
           <div class="table-responsive">
             <table class="table table-bordered">
               <thead>
@@ -37,87 +52,72 @@
                   <th>Kode</th>
                   <th>Nama</th>
                   <th>Jumlah Produk</th>
+                  <th>Status</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
+              @foreach($itemkategori as $kategori)
                 <tr>
-                  <td>1</td>
                   <td>
-                    <img src="{{ asset('images/slide1.jpg') }}" alt="kategori 1" width='150px'>
-                    <div class="row mt-2">
-                      <div class="col">
-                        <input type="file" name="gambar" id="gambar">
-                      </div>
-                      <div class="col-auto">
-                        <button class="btn btn-sm btn-primary">Upload</button>
-                      </div>
-                    </div>
+                  {{ ++$no }}
                   </td>
-                  <td>KATE-1</td>
-                  <td>Obat Generik</td>
-                  <td>12 Produk</td>
                   <td>
-                    <a href="{{ route('kategori.edit', 2) }}" class="btn btn-sm btn-primary mr-2 mb-2">
+                    <!-- image kategori -->
+                    @if($kategori->foto != null)
+                    <img src="{{ \Storage::url($kategori->foto) }}" alt="{{ $kategori->nama_kategori }}" width='150px' class="img-thumbnail mb-2">
+                    <br>
+                    <form action="{{ url('/admin/imagekategori/'.$kategori->id) }}" method="post" style="display:inline;">
+                      @csrf
+                      {{ method_field('delete') }}
+                      <button type="submit" class="btn btn-sm btn-danger mb-2">
+                        Hapus
+                      </button>                    
+                    </form>
+                    @else
+                    <form action="{{ url('/admin/imagekategori') }}" method="post" enctype="multipart/form-data" class="form-inline">
+                      @csrf
+                      <div class="form-group">
+                        <input type="file" name="image" id="image">
+                        <input type="hidden" name="kategori_id" value={{ $kategori->id }}>
+                      </div>
+                      <div class="form-group">
+                        <button class="btn btn-primary">Upload</button>
+                      </div>
+                    </form>
+                    @endif
+                    <!-- end image kategori -->
+                  </td>
+                  <td>
+                  {{ $kategori->kode_kategori }}
+                  </td>
+                  <td>
+                  {{ $kategori->nama_kategori }}
+                  </td>
+                  <td>
+                  {{ isset($kategori->produk) }} Produk
+                  </td>
+                  <td>
+                  {{ $kategori->status }}
+                  </td>
+                  <td>
+                    <a href="{{ route('kategori.edit', $kategori->id) }}" class="btn btn-sm btn-primary mr-2 mb-2">
                       Edit
                     </a>
-                    <button class="btn btn-sm btn-danger mb-2">
-                      Hapus
-                    </button>
+                    <form action="{{ route('kategori.destroy', $kategori->id) }}" method="post" style="display:inline;">
+                      @csrf
+                      {{ method_field('delete') }}
+                      <button type="submit" class="btn btn-sm btn-danger mb-2">
+                        Hapus
+                      </button>                    
+                    </form>
                   </td>
                 </tr>
-                <tr>
-                  <td>2</td>
-                  <td>
-                    <img src="{{ asset('images/slide1.jpg') }}" alt="kategori 1" width='150px'>
-                    <div class="row mt-2">
-                      <div class="col">
-                        <input type="file" name="gambar" id="gambar">
-                      </div>
-                      <div class="col-auto">
-                        <button class="btn btn-sm btn-primary">Upload</button>
-                      </div>
-                    </div>
-                  </td>
-                  <td>KATE-2</td>
-                  <td>Obat Paten</td>
-                  <td>20 Produk</td>
-                  <td>
-                    <a href="{{ route('kategori.edit', 2) }}" class="btn btn-sm btn-primary mr-2 mb-2">
-                      Edit
-                    </a>
-                    <button class="btn btn-sm btn-danger mb-2">
-                      Hapus
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>
-                    <img src="{{ asset('images/slide1.jpg') }}" alt="kategori 1" width='150px'>
-                    <div class="row mt-2">
-                      <div class="col">
-                        <input type="file" name="gambar" id="gambar">
-                      </div>
-                      <div class="col-auto">
-                        <button class="btn btn-sm btn-primary">Upload</button>
-                      </div>
-                    </div>
-                  </td>
-                  <td>KATE-3</td>
-                  <td>Alat medis</td>
-                  <td>20 Produk</td>
-                  <td>
-                    <a href="{{ route('kategori.edit', 2) }}" class="btn btn-sm btn-primary mr-2 mb-2">
-                      Edit
-                    </a>
-                    <button class="btn btn-sm btn-danger mb-2">
-                      Hapus
-                    </button>
-                  </td>
-                </tr>
+              @endforeach
               </tbody>
             </table>
+            <!-- untuk menampilkan link page, tambahkan skrip di bawah ini -->
+            {{ $itemkategori->links() }}
           </div>
         </div>
       </div>
