@@ -78,7 +78,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
     // form laporan
     Route::get('laporan', [LaporanController::class, 'index']);
     // proses laporan
-    Route::get('proseslaporan', [LaporanController::class, 'proses']);
+    Route::get('laporan/proses', [LaporanController::class, 'proses']);
     // image
     Route::get('image', [ImageController::class, 'index']);
     // simpan image

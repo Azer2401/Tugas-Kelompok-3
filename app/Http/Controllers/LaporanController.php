@@ -61,7 +61,7 @@ class LaporanController extends Controller
                 return "Oktober";
                 break;
             case '11':
-                return "Nopember";
+                return "November";
                 break;
             case '12':
                 return "Desember";

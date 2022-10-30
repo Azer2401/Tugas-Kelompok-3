@@ -22,14 +22,14 @@
                 <option value="8">Agustus</option>
                 <option value="9">September</option>
                 <option value="10">Oktober</option>
-                <option value="11">Nopember</option>
+                <option value="11">November</option>
                 <option value="12">Desember</option>
               </select>
             </div>
             <div class="form-group">
               <label for="tahun">Tahun</label>
               <select name="tahun" id="tahun" class="form-control">
-                @for($a = 2019; $a <= 2050; $a++)
+                @for($a = 2022; $a <= 2050; $a++)
                 <option value="{{$a}}">{{$a}}</option>
                 @endfor
               </select>
