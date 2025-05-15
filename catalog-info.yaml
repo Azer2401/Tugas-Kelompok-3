@@ -6,4 +6,5 @@ metadata:
     github.com/project-slug: Azer2401/Tugas-Kelompok-3
 spec:
   type: website
+  owner: rezaazhar.p@gmail.com
   lifecycle: experimental
