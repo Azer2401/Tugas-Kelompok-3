@@ -1,0 +1,9 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: Tugas-Kelompok-3
+  annotations:
+    github.com/project-slug: Azer2401/Tugas-Kelompok-3
+spec:
+  type: website
+  lifecycle: experimental
